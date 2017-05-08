@@ -3,8 +3,15 @@ package com.ldu.dao;
 import com.ldu.pojo.User;
 
 public interface UserMapper {
+    int deleteByPrimaryKey(Integer id);
 
-    public void addUser(User user);
-    public User getUserByUserName(String username);
-    public User getUserByPhone(String phone);
+    int insert(User record);
+
+    int insertSelective(User record);
+
+    User selectByPrimaryKey(Integer id);
+
+    int updateByPrimaryKeySelective(User record);
+
+    int updateByPrimaryKey(User record);
 }

@@ -1,9 +1,10 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-
 <!DOCTYPE html>
 <html>
 	<head>
@@ -67,12 +68,38 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							data-tooltip="需要先登录哦！" class="red lighten-1 waves-effect waves-light btn" data-tooltip-id="510d3084-e666-f82f-3655-5eae4304a83a"	>
 							我要发布</button>
 						</li>
-						<li>
-							<a onclick="showLogin()">登录</a>
-						</li>
-						<li>
-							<a onclick="showSignup()">注册</a>
-						</li>
+<						<c:if test="${!empty user}">
+							<li>
+								<a href="">我发布的商品</a>
+							</li>
+							<li>
+								<a>${user.username}</a>
+							</li>
+							<li class="notification">
+								<i ng-click="showNotificationBox()" class="iconfont"></i>
+								<div ng-show="notification.tagIsShow" class="notification-amount red lighten-1 ng-binding ng-hide">0 </div>
+							</li>
+							<li>
+								<a ng-click="changeMoreVertShow()">
+									<i class="iconfont"></i>
+								</a>
+								<div class="more-vert">
+									<ul ng-show="moreVertIsShow" class="dropdown-content ng-hide">
+										<li><a>邮箱验证</a></li>
+										<li><a>更改用户名</a></li>
+										<li><a>退出登录</a></li>
+									</ul>
+								</div>
+							</li>
+						</c:if>
+<						<c:if test="${empty user}">
+							<li>
+								<a onclick="showLogin()">登录</a>
+							</li>
+							<li>
+								<a onclick="showSignup()">注册</a>
+							</li>
+						</c:if>
 					</ul>
 				</div>
 			</nav>
@@ -87,24 +114,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         		<div class="publish-box z-depth-4">
         			<div class="row">
         				<div class="col s12 title"></div>
-        				<div class="input-field col s12">
-        					<input type="text" ng-model="user.username" required="required" class="validate ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" />
-        					<label for="item-name">手机</label>
-        				</div>
-        				<div class="input-field col s12">
-        					<input type="password" ng-model="user.password" ng-keyup="checkEnter($event)" required="required" class="validate ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" />
-        					<label for="item-detail">密码</label>
-        					<a ng-click="showForget()" class="forget-btn">忘记密码？</a>
-        				</div>
-        				<button ng-click="login()" class="waves-effect waves-light btn login-btn red lighten-1">
-        					<i class="iconfont left"></i>
-        					<em>登录</em>
-        				</button>
-        				<div class="col s12 signup-area">
-        					<em>没有账号？赶快</em>
-        					<a onclick="showSignup()" class="signup-btn">注册</a>
-        					<em>吧！</em>
-        				</div>
+						<form:form action="/user/loginValidate" method="post" commandName="user" role="form">
+							<div class="input-field col s12">
+								<input type="text" name="phone" required="required" pattern="^1[0-9]{10}$" class="validate ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-pattern ng-touched" />
+								<label>手机</label>
+							</div>
+							<div class="input-field col s12">
+								<input type="password" name="password" required="required" class="validate ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" />
+								<label>密码</label>
+								<a ng-click="showForget()" class="forget-btn">忘记密码？</a>
+							</div>
+							<button type="submit" class="waves-effect waves-light btn login-btn red lighten-1">
+								<i class="iconfont left"></i>
+								<em>登录</em>
+							</button>
+							<div class="col s12 signup-area">
+								<em>没有账号？赶快</em>
+								<a onclick="showSignup()" class="signup-btn">注册</a>
+								<em>吧！</em>
+							</div>
+						</form:form>
         			</div>
         		</div>
         	</div>
@@ -119,28 +148,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         		<div class="publish-box z-depth-4">
         			<div class="row">
         				<div class="col s12 title"></div>
-        				<div class="input-field col s12">
-        					<input type="text" ng-model="signupInfo.tel" required="required" pattern="^1[0-9]{10}$" class="validate ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-pattern ng-touched" />
-        					<label>昵称</label>
-        				</div>
-        				<div class="input-field col s12">
-        					<input type="text" ng-model="signupInfo.tel" required="required" pattern="^1[0-9]{10}$" class="validate ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-pattern ng-touched" />
-        					<label>手机</label>
-        				</div>
-        				<div class="input-field col s12">
-        					<input type="password" ng-model="signupInfo.password" required="required" class="validate ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" />
-        					<label for="item-detail">密码</label>
-        				</div>
-        				<div ng-show="checkTelIsShow" class="col s12">
-        					<button ng-click="checkTel()" class="waves-effect waves-light btn verify-btn red lighten-1">
-        						<i class="iconfont left"></i>
-        						<em>点击注册</em>
-        					</button>
-        				</div>
-        				<div ng-show="checkTelIsShow" class="login-area col s12">
-        					<em>已有账号？去</em>
-        					<a onclick="showLogin()">登录</a>
-        				</div>
+						<form:form action="/user/addUser" method="post" commandName="user" role="form">
+							<div class="input-field col s12">
+								<input type="text" name="username" required="required" class="validate ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-pattern ng-touched" />
+								<label>昵称</label>
+							</div>
+							<div class="input-field col s12">
+								<input type="text" name="phone" required="required" pattern="^1[0-9]{10}$" class="validate ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-pattern ng-touched" />
+								<label>手机</label>
+							</div>
+							<div class="input-field col s12">
+								<input type="password" name="password" required="required" class="validate ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" />
+								<label>密码</label>
+							</div>
+							<div ng-show="checkTelIsShow" class="col s12">
+								<button type="submit" class="waves-effect waves-light btn verify-btn red lighten-1">
+									<i class="iconfont left"></i>
+									<em>点击注册</em>
+								</button>
+							</div>
+							<div ng-show="checkTelIsShow" class="login-area col s12">
+								<em>已有账号？去</em>
+								<a onclick="showLogin()">登录</a>
+							</div>
+						</form:form>
         			</div>
         		</div>
         	</div>

@@ -1,5 +1,6 @@
-package com.ldu.controller;
+﻿package com.ldu.controller;
 
+import com.ldu.util.MD5;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,45 +23,52 @@ public class UserController {
         return "index";
     }
 
-    @RequestMapping(value = "/register")
-    public String register() {
-        return "user/register";
-    }
-
-    @RequestMapping(value = "/addUser",method = RequestMethod.GET)
+    /**
+     * 用户注册
+     * @param user1
+     * @return
+     */
+    @RequestMapping(value = "/addUser",method = RequestMethod.POST)
     public String addUser(@ModelAttribute("user") User user1) {
-        //检测该用户是否已经存在
-        User user=userService.getUserByUserName(user1.getUsername());
-        if(user==null) {
-            return "redirect:user/register";
+        //对密码进行MD5加密
+        String str = MD5.md5(user1.getPassword());
+        System.out.println(str);
+        User user=userService.getUserByPhone(user1.getPhone());
+        if(user==null) {//检测该用户是否已经注册
+            user1.setPassword(str);
+            userService.addUser(user1);
+            return "redirect:/";
         }
-        return "redirect:user/login";
+        return "redirect:/";
     }
 
-    @RequestMapping(value = "/login",method = RequestMethod.GET)
-    public String login() {
-        return "user/login";
-    }
-
-    @RequestMapping(value = "/loginValidate",method = RequestMethod.POST)
-    public String loginValidate(@RequestParam("username") String username,@RequestParam("password") String password,HttpSession httpSession) {
-        if(username==null || password==null)
-            return "user/login";
-        else {
-            User user = userService.getUserByUserName(username);
-            if(user.getPassword().equals(password)) {
-                httpSession.setAttribute("username", username);
-                return "redirect:/stu/student/stuList";
-            } else  {
-                return "user/login";
+    /**
+     * 登录验证
+     * @param phone
+     * @param password
+     * @param httpSession
+     * @return
+     */
+    @RequestMapping(value = "/loginValidate")
+    public String loginValidate(@RequestParam("phone") String phone,@RequestParam("password") String password,HttpSession httpSession) {
+        System.out.println("loginValidate");
+        User user = userService.getUserByPhone(phone);
+        if(user == null)
+            return "redirect:/";
+        if(user != null) {
+            String pwd = MD5.md5(password);
+            if(pwd.equals(user.getPassword())) {
+                httpSession.setAttribute("user",user);
+                return "redirect:/";
             }
         }
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/logout")
     public String logout(HttpSession httpSession) {
-        httpSession.removeAttribute("username");
-        return "redirect:/user/login";
+        httpSession.removeAttribute("user");
+        return "redirect:/";
     }
 
 }
