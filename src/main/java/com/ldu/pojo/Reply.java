@@ -5,6 +5,8 @@ public class Reply {
 
     private Integer userId;
 
+    private Integer atuserId;
+
     private Integer commetId;
 
     private String createAt;
@@ -25,6 +27,14 @@ public class Reply {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public Integer getAtuserId() {
+        return atuserId;
+    }
+
+    public void setAtuserId(Integer atuserId) {
+        this.atuserId = atuserId;
     }
 
     public Integer getCommetId() {
