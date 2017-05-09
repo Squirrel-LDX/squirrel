@@ -133,6 +133,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         					<a onclick="showSignup()" class="signup-btn">注册</a>
         					<em>吧！</em>
         				</div>
+        				</form:form>
         			</div>
         		</div>
         	</div>

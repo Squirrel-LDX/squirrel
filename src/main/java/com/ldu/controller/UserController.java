@@ -1,6 +1,4 @@
 package com.ldu.controller;
-
-<<<<<<< HEAD
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,20 +13,6 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.ldu.pojo.User;
 import com.ldu.service.UserService;
 import com.ldu.util.MD5;
-=======
-import com.ldu.pojo.User;
-import com.ldu.util.MD5;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
-
-import com.ldu.service.UserService;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
->>>>>>> cbf2cf883e99ac69e99fccdf5c31a015b963b757
 
 
 @Controller

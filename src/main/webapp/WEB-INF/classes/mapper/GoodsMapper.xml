@@ -5,7 +5,7 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="catelog_id" property="catelogId" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
-    <result column="name" property="name" jdbcType="CHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="price" property="price" jdbcType="REAL" />
     <result column="real_price" property="realPrice" jdbcType="REAL" />
     <result column="start_time" property="startTime" jdbcType="VARCHAR" />
@@ -39,7 +39,7 @@
       end_time, commet_num, desc
       )
     values (#{id,jdbcType=INTEGER}, #{catelogId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
-      #{name,jdbcType=CHAR}, #{price,jdbcType=REAL}, #{realPrice,jdbcType=REAL}, #{startTime,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{price,jdbcType=REAL}, #{realPrice,jdbcType=REAL}, #{startTime,jdbcType=VARCHAR}, 
       #{endTime,jdbcType=VARCHAR}, #{commetNum,jdbcType=INTEGER}, #{desc,jdbcType=LONGVARCHAR}
       )
   </insert>
@@ -88,7 +88,7 @@
         #{userId,jdbcType=INTEGER},
       </if>
       <if test="name != null" >
-        #{name,jdbcType=CHAR},
+        #{name,jdbcType=VARCHAR},
       </if>
       <if test="price != null" >
         #{price,jdbcType=REAL},
@@ -120,7 +120,7 @@
         user_id = #{userId,jdbcType=INTEGER},
       </if>
       <if test="name != null" >
-        name = #{name,jdbcType=CHAR},
+        name = #{name,jdbcType=VARCHAR},
       </if>
       <if test="price != null" >
         price = #{price,jdbcType=REAL},
@@ -147,7 +147,7 @@
     update goods
     set catelog_id = #{catelogId,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=INTEGER},
-      name = #{name,jdbcType=CHAR},
+      name = #{name,jdbcType=VARCHAR},
       price = #{price,jdbcType=REAL},
       real_price = #{realPrice,jdbcType=REAL},
       start_time = #{startTime,jdbcType=VARCHAR},
@@ -160,7 +160,7 @@
     update goods
     set catelog_id = #{catelogId,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=INTEGER},
-      name = #{name,jdbcType=CHAR},
+      name = #{name,jdbcType=VARCHAR},
       price = #{price,jdbcType=REAL},
       real_price = #{realPrice,jdbcType=REAL},
       start_time = #{startTime,jdbcType=VARCHAR},
