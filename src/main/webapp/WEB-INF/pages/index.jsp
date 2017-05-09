@@ -114,7 +114,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div class="publish-box z-depth-4">
 				<div class="row">
 					<div class="col s12 title"></div>
-					<form:form action="/user/login" method="post" commandName="user"
+					<form:form action="user/login" method="post" commandName="user"
 						role="form">
 						<div class="input-field col s12">
 							<input type="text" name="phone" required="required"
@@ -150,7 +150,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div class="publish-box z-depth-4">
 				<div class="row">
 					<div class="col s12 title"></div>
-					<form:form action="/user/addUser" method="post" commandName="user"
+					<form:form action="user/addUser" method="post" commandName="user"
 						role="form">
 						<div class="input-field col s12">
 							<input type="text" name="username" required="required"
@@ -190,7 +190,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div class="col s12 title">
 						<h1>修改用户名</h1>
 					</div>
-					<form:form action="/user/changeName" method="post"
+					<form:form action="user/changeName" method="post"
 						commandName="user" role="form">
 						<div class="input-field col s12">
 							<input type="text" name="username" required="required"
