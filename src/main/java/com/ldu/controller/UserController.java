@@ -1,13 +1,17 @@
-﻿package com.ldu.controller;
+package com.ldu.controller;
 
 import com.ldu.util.MD5;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import com.ldu.pojo.User;
 import com.ldu.service.UserService;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
@@ -43,31 +47,43 @@ public class UserController {
     }
 
     /**
-     * 登录验证
-     * @param phone
-     * @param password
-     * @param httpSession
+     * 验证登录
+     * @param request
+     * @param user
+     * @param modelMap
      * @return
      */
-    @RequestMapping(value = "/loginValidate")
-    public String loginValidate(@RequestParam("phone") String phone,@RequestParam("password") String password,HttpSession httpSession) {
-        System.out.println("loginValidate");
-        User user = userService.getUserByPhone(phone);
-        if(user == null)
-            return "redirect:/";
-        if(user != null) {
-            String pwd = MD5.md5(password);
-            if(pwd.equals(user.getPassword())) {
-                httpSession.setAttribute("user",user);
-                return "redirect:/";
+    @RequestMapping(value = "/login")
+    public ModelAndView loginValidate(HttpServletRequest request,User user,ModelMap modelMap) {
+        User cur_user = userService.getUserByPhone(user.getPhone());
+        if(cur_user == null)
+            return new ModelAndView(new RedirectView("/"));
+        if(cur_user != null) {
+            String pwd = MD5.md5(user.getPassword());
+            if(pwd.equals(cur_user.getPassword())) {
+                request.getSession().setAttribute("cur_user",cur_user);
+                return new ModelAndView("redirect:/");
             }
         }
-        return "redirect:/";
+        return new ModelAndView("redirect:/");
     }
-
+    @RequestMapping(value = "/changeName")
+    public ModelAndView changeName(HttpServletRequest request,User user,ModelMap modelMap) {
+        //从session中获取出当前用户
+        User cur_user = (User)request.getSession().getAttribute("cur_user");
+        cur_user.setUsername(user.getUsername());//更改当前用户的用户名
+        userService.updateUserName(cur_user);//执行修改操作
+        request.getSession().setAttribute("cur_user",cur_user);//修改session值
+        return new ModelAndView("redirect:/");
+    }
+    /**
+     * 用户退出
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/logout")
-    public String logout(HttpSession httpSession) {
-        httpSession.removeAttribute("user");
+    public String logout(HttpServletRequest request) {
+        request.getSession().setAttribute("cur_user",null);
         return "redirect:/";
     }
 

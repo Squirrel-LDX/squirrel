@@ -60,6 +60,20 @@ public class DateUtil {
 	}
 	
 	/**
+	 * 根据给定的日期得到一天前的日期(年-月-日)
+	 * @param time
+	 * @return
+	 */
+	public static String getDayBeginDate(long time){
+		Long three = 24 * 60 * 60 * 1000l;
+		Long threeDay = time - three;
+		SimpleDateFormat sdf = new SimpleDateFormat(FORMAT1);
+		Date threeTime = new Date(threeDay);
+		String _time = sdf.format(threeTime);
+		return _time;
+	}
+	
+	/**
 	 * 根据给定的日期得到三天前的日期(年-月-日)
 	 * @param time
 	 * @return
@@ -68,6 +82,34 @@ public class DateUtil {
 		Long three = 3 * 24 * 60 * 60 * 1000l;
 		Long threeDay = time - three;
 		SimpleDateFormat sdf = new SimpleDateFormat(FORMAT1);
+		Date threeTime = new Date(threeDay);
+		String _time = sdf.format(threeTime);
+		return _time;
+	}
+	
+	/**
+	 * 根据给定的日期得到一个月前的日期(年-月-日)
+	 * @param time
+	 * @return
+	 */
+	public static String getMonthBeginDate(long time){
+		Long month = 30 * 24 * 60 * 60 * 1000l;
+		Long threeDay = time - month;
+		SimpleDateFormat sdf = new SimpleDateFormat(FORMAT1);
+		Date threeTime = new Date(threeDay);
+		String _time = sdf.format(threeTime);
+		return _time;
+	}
+	
+	/**
+	 * 根据给定的时间得到三天前的时间(年-月-日 时:分)
+	 * @param time
+	 * @return
+	 */
+	public static String getThreeDayBeginTime(long time){
+		Long three = 3 * 24 * 60 * 60 * 1000l;
+		Long threeDay = time - three;
+		SimpleDateFormat sdf = new SimpleDateFormat(FORMAT3);
 		Date threeTime = new Date(threeDay);
 		String _time = sdf.format(threeTime);
 		return _time;
@@ -85,6 +127,18 @@ public class DateUtil {
 		Date threeTime = new Date(threeDay);
 		String _time = sdf.format(threeTime);
 		return _time;
+	}
+	
+	/**
+	 * 根据给定的时间得到10天的时间
+	 * @param time
+	 * @return
+	 */
+	public static Date getDateSecond(long time){
+		Long month = 10 * 1000l;
+		Long threeDay = time - month;
+		Date threeTime = new Date(threeDay);
+		return threeTime;
 	}
 	
 	/**
@@ -112,7 +166,6 @@ public class DateUtil {
 		if(checkTime != null && !"".equals(checkTime) && checkTime.length()>19){
 			checkTime = checkTime.substring(0, 19);
 		}
-		
 		return checkTime;
 	}
 	
@@ -148,7 +201,6 @@ public class DateUtil {
 		if(checkTime != null && !"".equals(checkTime) && checkTime.length()>19){
 			checkTime = checkTime.substring(0, 10);
 		}
-		
 		return checkTime;
 	}
 	
@@ -166,7 +218,6 @@ public class DateUtil {
 		if(checkTime != null && !"".equals(checkTime) && checkTime.length()>19){
 			checkTime = checkTime.substring(0, 10);
 		}
-		
 		return checkTime;
 	}
 	
@@ -184,7 +235,6 @@ public class DateUtil {
 		if(checkTime != null && !"".equals(checkTime) && checkTime.length()>19){
 			checkTime = checkTime.substring(0, 19);
 		}
-		
 		return checkTime;
 	}
 
