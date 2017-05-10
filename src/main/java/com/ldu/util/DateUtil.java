@@ -22,10 +22,9 @@ public class DateUtil {
 	 * 时间格式 : 年-月-日 时:分:秒   24小时制
 	 */
     public static final String FORMAT3 = "yyyy-MM-dd HH:mm:ss";
-	
+
 	/**
 	 * 获取当前日期(年月日)
-	 * @param time
 	 * @return
 	 */
 	public static String getNowDay(){
@@ -37,7 +36,6 @@ public class DateUtil {
 	
 	/**
 	 * 获取当前时间(年-月-日 时:分:秒)
-	 * @param time
 	 * @return
 	 */
 	public static String getNowDate(){
@@ -49,7 +47,6 @@ public class DateUtil {
 	
 	/**
 	 * 获取当前时间(年-月-日 时:分:秒)
-	 * @param time
 	 * @return
 	 */
 	public static String getNowTime(){

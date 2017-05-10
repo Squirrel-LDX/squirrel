@@ -92,9 +92,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</a>
 					<div class="more-vert">
 						<ul class="dropdown-content">
-							<li><a>个人中心</a></li>
+							<li><a href="user/home">个人中心</a></li>
+							<li><a>消息</a></li>
 							<li><a onclick="ChangeName()">更改用户名</a></li>
-							<li><a href="/user/logout">退出登录</a></li>
+							<li><a href="user/logout">退出登录</a></li>
 						</ul>
 					</div>
 				</li>
@@ -121,7 +122,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div class="publish-box z-depth-4">
 			<div class="row">
 				<div class="col s12 title"></div>
-				<form:form action="/user/login" method="post" commandName="user" role="form">
+				<form:form action="user/login" method="post" commandName="user" role="form">
 					<div class="input-field col s12">
 						<input type="text" name="phone" required="required" pattern="^1[0-9]{10}$" class="validate ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-pattern ng-touched" />
 						<label>手机</label>
@@ -155,7 +156,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div class="publish-box z-depth-4">
 			<div class="row">
 				<div class="col s12 title"></div>
-				<form:form action="/user/addUser" method="post" commandName="user" role="form">
+				<form:form action="user/addUser" method="post" commandName="user" role="form">
 					<div class="input-field col s12">
 						<input type="text" name="username" required="required" class="validate ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-pattern ng-touched" />
 						<label>昵称</label>
@@ -191,7 +192,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="col s12 title">
 					<h1>修改用户名</h1>
 				</div>
-				<form:form action="/user/changeName" method="post" commandName="user" role="form">
+				<form:form action="user/changeName" method="post" commandName="user" role="form">
 					<div class="input-field col s12">
 						<input type="text" name="username" required="required" class="validate ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-pattern ng-touched" />
 						<label>修改用户名</label>

@@ -1,6 +1,7 @@
 package com.ldu.controller;
 
 import com.ldu.pojo.User;
+import com.ldu.util.DateUtil;
 import com.ldu.util.MD5;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -31,13 +32,14 @@ public class UserController {
      * @param user1
      * @return
      */
-    @RequestMapping(value = "/addUser",method = RequestMethod.POST)
+    @RequestMapping(value = "/addUser")
     public String addUser(@ModelAttribute("user") User user1) {
-        //对密码进行MD5加密
-        String str = MD5.md5(user1.getPassword());
-        System.out.println(str);
         User user=userService.getUserByPhone(user1.getPhone());
         if(user==null) {//检测该用户是否已经注册
+            String t = DateUtil.getNowDate();
+            //对密码进行MD5加密
+            String str = MD5.md5(user1.getPassword());
+            user1.setCreateAt(t);//创建开始时间
             user1.setPassword(str);
             userService.addUser(user1);
             return "redirect:/";
@@ -66,6 +68,14 @@ public class UserController {
         }
         return new ModelAndView("redirect:/");
     }
+
+    /**
+     * 更改用户名
+     * @param request
+     * @param user
+     * @param modelMap
+     * @return
+     */
     @RequestMapping(value = "/changeName")
     public ModelAndView changeName(HttpServletRequest request,User user,ModelMap modelMap) {
         //从session中获取出当前用户
@@ -74,6 +84,16 @@ public class UserController {
         userService.updateUserName(cur_user);//执行修改操作
         request.getSession().setAttribute("cur_user",cur_user);//修改session值
         return new ModelAndView("redirect:/");
+    }
+    @RequestMapping(value = "/updateInfo")
+    public ModelAndView updateInfo(HttpServletRequest request,User user,ModelMap modelMap) {
+        //从session中获取出当前用户
+        User cur_user = (User)request.getSession().getAttribute("cur_user");
+        cur_user.setUsername(user.getUsername());
+        cur_user.setQq(user.getQq());
+        userService.updateUserName(cur_user);//执行修改操作
+        request.getSession().setAttribute("cur_user",cur_user);//修改session值
+        return new ModelAndView("user/basic");
     }
     /**
      * 用户退出
@@ -84,6 +104,25 @@ public class UserController {
     public String logout(HttpServletRequest request) {
         request.getSession().setAttribute("cur_user",null);
         return "redirect:/";
+    }
+
+
+    /**
+     * 个人中心
+     * @return
+     */
+    @RequestMapping(value = "/home")
+    public String home() {
+        return "/user/home";
+    }
+
+    /**
+     * 个人信息设置
+     * @return
+     */
+    @RequestMapping(value = "/basic")
+    public String basic() {
+        return "user/basic";
     }
 
 }
