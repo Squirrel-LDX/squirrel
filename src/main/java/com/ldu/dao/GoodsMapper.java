@@ -2,7 +2,6 @@ package com.ldu.dao;
 
 import java.util.List;
 
-import com.ldu.pojo.Catelog;
 import com.ldu.pojo.Goods;
 
 public interface GoodsMapper {
@@ -42,7 +41,7 @@ public interface GoodsMapper {
     int updateByPrimaryKeySelective(Goods record);
 
     /**
-     * 通过主键和blobs更改信息
+     * 通过主键更改信息，包括大文本信息
      * @param record
      * @return
      */
@@ -57,16 +56,28 @@ public interface GoodsMapper {
     
     /**
      * 查询所有的商品
-     * 未在xml中实现
      * @return
      */
     public List<Goods> selectAllGoods();
     
     /**
-     * 根据商品分类，查询商品
-     * 未在xml中实现
+     * 根据商品分类的id，查询商品
      * @param catelog
      * @return
      */
-    public List<Goods> selectByCatelog(Catelog catelog);
+    public List<Goods> selectByCatelog(Integer catelog_id);
+    
+    /**
+     * 根据时间先后获取商品信息，进行分页查询
+     * 未在xml中实现
+     * @return
+     */
+    public List<Goods> selectByDate(int page,int maxResults);
+    
+    /**
+     * 根据catelog_id查询商品信息，结果按时间排序，最新的在前
+     * @param catelog_id
+     * @return
+     */
+    public List<Goods> selectByCatelogOrderByDate(Integer catelog_id);
 }

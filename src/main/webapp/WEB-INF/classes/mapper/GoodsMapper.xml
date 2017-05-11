@@ -29,10 +29,17 @@
     from goods
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByCatelog" resultMap="ResultMapWithBLOBs">
+  	select * from goods where catelog_id = #{catelog_id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAllGoods" resultMap="ResultMapWithBLOBs">
+  	select * from goods    
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from goods
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  
   <insert id="insert" parameterType="com.ldu.pojo.Goods" >
     insert into goods (id, catelog_id, user_id, 
       name, price, real_price, start_time, 

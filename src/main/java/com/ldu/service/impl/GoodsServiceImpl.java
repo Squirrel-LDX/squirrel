@@ -4,17 +4,21 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.stereotype.Service;
+
 import com.ldu.dao.GoodsMapper;
 import com.ldu.pojo.Catelog;
 import com.ldu.pojo.Goods;
-import com.ldu.service.GoodService;
+import com.ldu.service.GoodsService;
 /**
  * 对商品的操作类（增删改查）
  * @ClassName 	GoodServiceImpl
  * @author 		逯其鲁
  * @date		2017-5-9下午9:22:24
  */
-public class GoodServiceImpl implements GoodService {
+
+@Service("goodsService")
+public class GoodsServiceImpl implements GoodsService {
 	
 	@Resource
 	private GoodsMapper goodsMapper;
@@ -31,11 +35,6 @@ public class GoodServiceImpl implements GoodService {
 	}
 
 	@Override
-	public void updateGoods(Goods goods) {
-		this.goodsMapper.updateByPrimaryKey(goods);
-	}
-
-	@Override
 	public void deleteGoodsByPrimaryKey(Integer id) {
 		this.goodsMapper.deleteByPrimaryKey(id);
 	}
@@ -48,7 +47,20 @@ public class GoodServiceImpl implements GoodService {
 
 	@Override
 	public List<Goods> getGoodsByCatelog(Catelog catelog) {
-		List<Goods> goods = this.getGoodsByCatelog(catelog);
+		List<Goods> goods = goodsMapper.selectByCatelog(catelog.getId());
+		return goods;
+	}
+
+	@Override
+	public void updateGoodsByPrimaryKeyWithBLOBs(int id,Goods goods) {
+		goods.setId(id);
+		this.goodsMapper.updateByPrimaryKeyWithBLOBs(goods);
+	}
+
+	@Override
+	public List<Goods> getGoodsByDate(int page, int maxResults) {
+		// TODO Auto-generated method stub
+		List<Goods> goods = goodsMapper.selectByDate(page, maxResults);
 		return goods;
 	}
 	
