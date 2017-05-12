@@ -7,23 +7,24 @@ import com.ldu.pojo.Goods;
 
 public interface GoodsService {
 	/**
-	 * 添加商品
+	 * 发布商品
 	 * @param goods
+	 * @param duration 允许上架时长
 	 */
-	public void addGood(Goods goods);
+	public void addGood(Integer userId, Goods goods , Integer duration);
 	
 	/**
 	 * 通过主键获取商品
 	 * @param id
 	 * @return
 	 */
-	public Goods getGoodsByPrimaryKey(Integer id);
+	public Goods getGoodsByPrimaryKey(Integer goodsId);
 	
 	/**
 	 * 更新商品信息
 	 * @param goods
 	 */
-	public void updateGoodsByPrimaryKeyWithBLOBs(int id ,Goods goods);
+	public void updateGoodsByPrimaryKeyWithBLOBs(int goodsId ,Goods goods);
 	
 	/**
 	 * 通过主键删除商品
@@ -43,11 +44,11 @@ public interface GoodsService {
 	public List<Goods> getGoodsByCatelog(Catelog catelog);
 	
 	/**
-	 * 根据分类id进行时间排序,获取前几个结果
-	 * @param firstResult 从第几个结果开始
-	 * @param maxResults  获取多少结果
+	 * 根据分类id,并进行时间排序,获取前limit个结果
+	 * @param catelogId
+	 * @param limit
 	 * @return
 	 */
-	public List<Goods> getGoodsByCatelogOrderByDate(Integer catelogId);
+	public List<Goods> getGoodsByCatelogOrderByDate(Integer catelogId,Integer limit);
 	
 }

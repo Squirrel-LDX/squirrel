@@ -10,6 +10,7 @@ import com.ldu.dao.GoodsMapper;
 import com.ldu.pojo.Catelog;
 import com.ldu.pojo.Goods;
 import com.ldu.service.GoodsService;
+import com.ldu.util.DateUtil;
 /**
  * 对商品的操作类（增删改查）
  * @ClassName 	GoodServiceImpl
@@ -24,13 +25,21 @@ public class GoodsServiceImpl implements GoodsService {
 	private GoodsMapper goodsMapper;
 	
 	@Override
-	public void addGood(Goods goods) {
-		goodsMapper.insert(goods);
+	public void addGood(Integer userId , Goods goods , Integer duration) {
+		String startTime = DateUtil.getNowDay();
+		String endTime = DateUtil.getLastTime(startTime, duration);
+		String polishTime = startTime;
+		//添加上架时间，下架时间，擦亮时间
+		goods.setPolishTime(polishTime);
+		goods.setEndTime(endTime);
+		goods.setStartTime(startTime);
+		goods.setUserId(userId);
+		goodsMapper.insertSelective(goods);
 	}
 
 	@Override
-	public Goods getGoodsByPrimaryKey(Integer id) {
-		Goods goods = this.goodsMapper.selectByPrimaryKey(id);
+	public Goods getGoodsByPrimaryKey(Integer goodsId) {
+		Goods goods = this.goodsMapper.selectByPrimaryKey(goodsId);
 		return goods;
 	}
 
@@ -52,15 +61,15 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 
 	@Override
-	public void updateGoodsByPrimaryKeyWithBLOBs(int id,Goods goods) {
-		goods.setId(id);
+	public void updateGoodsByPrimaryKeyWithBLOBs(int goodsId,Goods goods) {
+		goods.setId(goodsId);
 		this.goodsMapper.updateByPrimaryKeyWithBLOBs(goods);
 	}
 
 	@Override
-	public List<Goods> getGoodsByCatelogOrderByDate(Integer catelogId) {
+	public List<Goods> getGoodsByCatelogOrderByDate(Integer catelogId,Integer limit) {
 		
-		List<Goods> goods = goodsMapper.selectByCatelogOrderByDate(catelogId);
+		List<Goods> goods = goodsMapper.selectByCatelogOrderByDate(catelogId , limit);
 		return goods;
 	}
 	

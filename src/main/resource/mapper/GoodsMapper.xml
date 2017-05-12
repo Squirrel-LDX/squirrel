@@ -22,16 +22,17 @@
   <sql id="Blob_Column_List" >
     desc
   </sql>
+  <sql id="Factor">
+  	 and end_time >= now() order by polish_time
+  </sql>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
+    *
     from goods
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectByCatelog" resultMap="ResultMapWithBLOBs">
-  	select * from goods where catelog_id = #{catelog_id,jdbcType=INTEGER}
+  	select * from goods where catelog_id = #{catelog_id,jdbcType=INTEGER} 
   </select>
   <select id="selectAllGoods" resultMap="ResultMapWithBLOBs">
   	select * from goods    
@@ -39,7 +40,9 @@
   
   <select id="selectByCatelogOrderByDate" resultMap="ResultMapWithBLOBs">
   	select * from goods 
-  	where catelog_id = #{catelog_id,jdbcType=INTEGER} order by polish_time
+  	where catelog_id = #{catelogId,jdbcType=INTEGER} 
+  	<include refid="Factor"></include>
+  	limit #{limit,jdbcType=INTEGER}
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
@@ -50,11 +53,10 @@
   <insert id="insert" parameterType="com.ldu.pojo.Goods" >
     insert into goods (id, catelog_id, user_id, 
       name, price, real_price, start_time, 
-      end_time, commet_num, desc
-      )
+      end_time, polish_time, commet_num, desc)
     values (#{id,jdbcType=INTEGER}, #{catelogId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
       #{name,jdbcType=VARCHAR}, #{price,jdbcType=REAL}, #{realPrice,jdbcType=REAL}, #{startTime,jdbcType=VARCHAR}, 
-      #{endTime,jdbcType=VARCHAR}, #{commetNum,jdbcType=INTEGER}, #{desc,jdbcType=LONGVARCHAR}
+      #{endTime,jdbcType=VARCHAR}, #{polishTime,jdbcType=VARCHAR}, #{commetNum,jdbcType=INTEGER}, #{desc,jdbcType=LONGVARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.ldu.pojo.Goods" >

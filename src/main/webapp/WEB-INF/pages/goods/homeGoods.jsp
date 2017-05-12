@@ -34,7 +34,7 @@
 				<th>商品描述</th>
 				<th>上架时间</th>
 			</tr>
-			<c:forEach var="item" items="${catelogGoods2}">
+			<c:forEach var="item" items="${goods}">
 				<tr>
 					<td><c:out value="${item.name}"></c:out>
 					</td>

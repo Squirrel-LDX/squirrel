@@ -30,11 +30,14 @@ public class GoodsController {
 	@RequestMapping("/homeGoods")
 	public ModelAndView homeGoods() throws Exception {
 		List<Goods> goods = null;
-
+		
 		ModelAndView modelAndView = new ModelAndView();
+		//商品种类数量
 		int catelogSize = 7;
-		for (int i = 1; i < catelogSize; i++) {
-			goods = goodsService.getGoodsByCatelogOrderByDate(i);
+		//每个种类显示商品数量
+		int goodsSize = 6;
+		for (int i = 1; i <= catelogSize; i++) {
+			goods = goodsService.getGoodsByCatelogOrderByDate(i, goodsSize);
 			String key = "catelog" + "Goods" + i;
 			modelAndView.addObject(key, goods);
 		}
@@ -68,9 +71,9 @@ public class GoodsController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/editGoods")
-	public ModelAndView editGoods(Integer id) throws Exception {
+	public ModelAndView editGoods(Integer goodsId) throws Exception {
 
-		Goods goods = goodsService.getGoodsByPrimaryKey(id);
+		Goods goods = goodsService.getGoodsByPrimaryKey(goodsId);
 		ModelAndView modelAndView = new ModelAndView();
 
 		// 讲商品信息添加到model
@@ -88,8 +91,8 @@ public class GoodsController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/editGoodsSubmit")
-	public String editGoodsSubmit(Integer id, Goods goods) throws Exception {
-		goodsService.updateGoodsByPrimaryKeyWithBLOBs(id, goods);
+	public String editGoodsSubmit(Integer goodsId, Goods goods) throws Exception {
+		goodsService.updateGoodsByPrimaryKeyWithBLOBs(goodsId, goods);
 		return "goods/homeGoods";
 	}
 
@@ -125,7 +128,8 @@ public class GoodsController {
 	 */
 	@RequestMapping("/publishGoods")
 	public String publishGoods() throws Exception {
-		return "goods/publishGoodsSubmit";
+		//可以校验用户是否登录
+		return "goods/publishGoods";
 	}
 
 	/**
@@ -139,7 +143,16 @@ public class GoodsController {
 			throws Exception {
 		Integer userId = (Integer) session.getAttribute("userId");
 		goods.setId(userId);
-		goodsService.addGood(goods);
-		return "goods/publishGoodsSubmit";
+		goodsService.addGood(userId,goods,10);
+		return "user/goods";
+	}
+	
+	@RequestMapping("goodsInfo")
+	public ModelAndView goodsInfo(Integer goodsId){
+		ModelAndView modelAndView = new ModelAndView();
+		Goods goods = goodsService.getGoodsByPrimaryKey(2);
+		modelAndView.addObject("goods",goods);
+		modelAndView.setViewName("goods/homeGoods");
+		return modelAndView;
 	}
 }

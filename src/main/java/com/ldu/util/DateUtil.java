@@ -1,5 +1,6 @@
 package com.ldu.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -238,4 +239,27 @@ public class DateUtil {
 		return checkTime;
 	}
 
+	
+	/**
+	 * 根据给定的时间得到n天后的时间
+	 * @param time
+	 * @param lastTime
+	 * @return
+	 */
+	public static String getLastTime(String time,int lastTime){
+		SimpleDateFormat sdf = new SimpleDateFormat(FORMAT1);
+		Date date;
+		String newTime = time;
+		try {
+			date = sdf.parse(time);
+			Long lastTimeDay = lastTime * 24 * 60 * 60 * 1000l;
+			Long lastDay = date.getTime() + lastTimeDay;
+			Date newDate = new Date(lastDay);
+			newTime = sdf.format(newDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return newTime;
+	}
 }

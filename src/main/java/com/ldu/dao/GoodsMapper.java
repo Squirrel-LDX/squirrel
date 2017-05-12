@@ -2,6 +2,8 @@ package com.ldu.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.ldu.pojo.Goods;
 
 public interface GoodsMapper {
@@ -76,8 +78,7 @@ public interface GoodsMapper {
     
     /**
      * 根据catelog_id查询商品信息，结果按擦亮时间排序，最新的在前
-     * 未在xml中实现
      * @return
      */
-    public List<Goods> selectByCatelogOrderByDate(Integer catelogId);
+    public List<Goods> selectByCatelogOrderByDate(@Param("catelogId")Integer catelogId,@Param("limit")Integer limit);
 }
