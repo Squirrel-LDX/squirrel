@@ -43,11 +43,11 @@ public interface GoodsService {
 	public List<Goods> getGoodsByCatelog(Catelog catelog);
 	
 	/**
-	 * 根据时间排序获取商品，进行分页
+	 * 根据分类id进行时间排序,获取前几个结果
 	 * @param firstResult 从第几个结果开始
 	 * @param maxResults  获取多少结果
 	 * @return
 	 */
-	public List<Goods> getGoodsByDate(int page,int maxResults);
+	public List<Goods> getGoodsByCatelogOrderByDate(Integer catelogId);
 	
 }

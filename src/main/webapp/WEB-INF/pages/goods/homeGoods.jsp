@@ -26,17 +26,24 @@
 </head>
 
 <body>
-	  <form>
+	<form>
 		<table>
 			<tr>
-				<th>商品名</th><th>价格</th><th>商品描述</th><th>上架时间</th>
+				<th>商品名</th>
+				<th>价格</th>
+				<th>商品描述</th>
+				<th>上架时间</th>
 			</tr>
-			<c:forEach var="item" items="${goods}">
+			<c:forEach var="item" items="${catelogGoods2}">
 				<tr>
-					<td><c:out value="${item.name}"></c:out></td>
-					<td><c:out value="${item.price}"></c:out></td>
-					<td><c:out value="${item.desc}"></c:out></td>
-					<td><c:out value="${item.startTime}"></c:out></td>
+					<td><c:out value="${item.name}"></c:out>
+					</td>
+					<td><c:out value="${item.price}"></c:out>
+					</td>
+					<td><c:out value="${item.desc}"></c:out>
+					</td>
+					<td><c:out value="${item.startTime}"></c:out>
+					</td>
 				</tr>
 			</c:forEach>
 		</table>

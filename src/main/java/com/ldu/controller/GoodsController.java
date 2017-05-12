@@ -22,16 +22,22 @@ public class GoodsController {
 	private GoodsService goodsService;
 
 	/**
-	 * 首页显示商品，每一类商品查询6件，根据最新上架排序
+	 * 首页显示商品，每一类商品查询6件，根据最新上架排序 key的命名为catelogGoods1、catelogGoods2....
 	 * 
 	 * @return
 	 * @throws Exception
 	 */
 	@RequestMapping("/homeGoods")
 	public ModelAndView homeGoods() throws Exception {
-		List<Goods> goods = goodsService.getAllGoods();
+		List<Goods> goods = null;
+
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("goods", goods);
+		int catelogSize = 7;
+		for (int i = 1; i < catelogSize; i++) {
+			goods = goodsService.getGoodsByCatelogOrderByDate(i);
+			String key = "catelog" + "Goods" + i;
+			modelAndView.addObject(key, goods);
+		}
 		modelAndView.setViewName("goods/homeGoods");
 		return modelAndView;
 	}
@@ -131,7 +137,7 @@ public class GoodsController {
 	@RequestMapping("publishGoodsSubmit")
 	public String publishGoodsSubmit(HttpSession session, Goods goods)
 			throws Exception {
-		Integer userId = (Integer)session.getAttribute("userId");
+		Integer userId = (Integer) session.getAttribute("userId");
 		goods.setId(userId);
 		goodsService.addGood(goods);
 		return "goods/publishGoodsSubmit";

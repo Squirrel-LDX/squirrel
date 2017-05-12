@@ -58,9 +58,9 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 
 	@Override
-	public List<Goods> getGoodsByDate(int page, int maxResults) {
-		// TODO Auto-generated method stub
-		List<Goods> goods = goodsMapper.selectByDate(page, maxResults);
+	public List<Goods> getGoodsByCatelogOrderByDate(Integer catelogId) {
+		
+		List<Goods> goods = goodsMapper.selectByCatelogOrderByDate(catelogId);
 		return goods;
 	}
 	

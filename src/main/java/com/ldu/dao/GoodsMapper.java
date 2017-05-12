@@ -75,9 +75,9 @@ public interface GoodsMapper {
     public List<Goods> selectByDate(int page,int maxResults);
     
     /**
-     * 根据catelog_id查询商品信息，结果按时间排序，最新的在前
-     * @param catelog_id
+     * 根据catelog_id查询商品信息，结果按擦亮时间排序，最新的在前
+     * 未在xml中实现
      * @return
      */
-    public List<Goods> selectByCatelogOrderByDate(Integer catelog_id);
+    public List<Goods> selectByCatelogOrderByDate(Integer catelogId);
 }

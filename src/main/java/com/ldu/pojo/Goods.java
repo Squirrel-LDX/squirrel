@@ -16,6 +16,8 @@ public class Goods {
     private String startTime;
 
     private String endTime;
+    
+    private String polishTime;
 
     private Integer commetNum;
 
@@ -100,4 +102,12 @@ public class Goods {
     public void setDesc(String desc) {
         this.desc = desc == null ? null : desc.trim();
     }
+
+	public String getPolishTime() {
+		return polishTime;
+	}
+
+	public void setPolishTime(String polishTime) {
+		this.polishTime = polishTime;
+	}
 }

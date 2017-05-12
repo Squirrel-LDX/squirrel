@@ -11,12 +11,13 @@
     <result column="start_time" property="startTime" jdbcType="VARCHAR" />
     <result column="end_time" property="endTime" jdbcType="VARCHAR" />
     <result column="commet_num" property="commetNum" jdbcType="INTEGER" />
+    <result column="polish_time" property="polishTime" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.ldu.pojo.Goods" extends="BaseResultMap" >
     <result column="desc" property="desc" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, catelog_id, user_id, name, price, real_price, start_time, end_time, commet_num
+    id, catelog_id, user_id, name, price, real_price, start_time, polish_time, end_time, commet_num
   </sql>
   <sql id="Blob_Column_List" >
     desc
@@ -35,6 +36,12 @@
   <select id="selectAllGoods" resultMap="ResultMapWithBLOBs">
   	select * from goods    
   </select>
+  
+  <select id="selectByCatelogOrderByDate" resultMap="ResultMapWithBLOBs">
+  	select * from goods 
+  	where catelog_id = #{catelog_id,jdbcType=INTEGER} order by polish_time
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from goods
     where id = #{id,jdbcType=INTEGER}
@@ -77,6 +84,9 @@
       <if test="endTime != null" >
         end_time,
       </if>
+      <if test="polishTime != null" >
+        polish_time,
+      </if>
       <if test="commetNum != null" >
         commet_num,
       </if>
@@ -108,6 +118,9 @@
       </if>
       <if test="endTime != null" >
         #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        #{polishTime,jdbcType=VARCHAR},
       </if>
       <if test="commetNum != null" >
         #{commetNum,jdbcType=INTEGER},
@@ -141,6 +154,9 @@
       <if test="endTime != null" >
         end_time = #{endTime,jdbcType=VARCHAR},
       </if>
+      <if test="endTime != null" >
+        polish_time = #{polishTime,jdbcType=VARCHAR},
+      </if>
       <if test="commetNum != null" >
         commet_num = #{commetNum,jdbcType=INTEGER},
       </if>
@@ -159,6 +175,7 @@
       real_price = #{realPrice,jdbcType=REAL},
       start_time = #{startTime,jdbcType=VARCHAR},
       end_time = #{endTime,jdbcType=VARCHAR},
+      polish_time = #{polishTime,jdbcType=VARCHAR},
       commet_num = #{commetNum,jdbcType=INTEGER},
       desc = #{desc,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
@@ -172,6 +189,7 @@
       real_price = #{realPrice,jdbcType=REAL},
       start_time = #{startTime,jdbcType=VARCHAR},
       end_time = #{endTime,jdbcType=VARCHAR},
+      polish_time = #{polishTime,jdbcType=VARCHAR},
       commet_num = #{commetNum,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
